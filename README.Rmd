@@ -1,7 +1,6 @@
 ---
 title: "Lab 6 Comparing two means"
 author: "Brett Vetter"
-date: `r Sys.Date()`
 output: github_document
 ---
 
@@ -12,6 +11,18 @@ They counted the number of electric fish species above and below the entrance po
 The data is provided in your GitHub repository.
 
 For each question below, write a sentence answering the question and show the code you used to come up with the answer, if applicable.
+
+```{r}
+library(tidyverse)
+
+fish <- read_csv("chap12q19ElectricFish.csv")
+fish_long <-
+  pivot_longer(fish, speciesUpstream:speciesDownstream,
+               names_to = "location",
+               values_to = "species") %>%
+  mutate(location = str_remove(location, c("species"))) %>%
+  print()
+```
 
 ## Question A
 
@@ -40,7 +51,14 @@ From the T test we conducted we determined that we can reject the null hypothesi
 ANSWER
 
 ```{r}
-
+fish_long %>% 
+  ggplot(aes(x = species)) +
+  geom_histogram(
+    aes(fill = location), 
+    bins = 10, 
+    alpha = 0.5, 
+    position = "identity"
+  ) 
 ```
 
-My assumption for part A is that there IS a difference between the number of species in the two different locations (upstream, downstream). This would be the alternative hypothesis and it is the same as saying the difference in means is not equal to 0. My assumption for part B is that there is NO difference in the number of species in each location. This would be the Null hypothesis and it is the same as saying the difference in means is equal to 0. The graph I created shows how the assumption from Part A was met.  
+My assumption for part A is that there IS a difference between the number of species in the two different locations (upstream, downstream). This would be the alternative hypothesis and it is the same as saying the difference in means is not equal to 0. My assumption for part B is that there is NO difference in the number of species in each location. This would be the Null hypothesis and it is the same as saying the difference in means is equal to 0. The histogram I created shows how the assumption from Part A was met.  

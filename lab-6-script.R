@@ -39,8 +39,8 @@ fish_long %>%
     bins = 10, 
     alpha = 0.5, 
     position = "identity"
-  ) +
-  geom_histogram(binwidth = 2)
+  ) 
+  
   
   
 
